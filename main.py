@@ -63,14 +63,14 @@ def sort(source: list[int], dest: list[int]) -> None:
             mergeRanges(source, dest, start, split, end)
             start = end
         
-        # Swap source and destination for next iteration
-        source[:] = dest
+        # Swap references to source and dest for next iteration
+        source = dest
 
 def main():
-    # unsorted = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+    unsorted = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
     # unsorted = [2,4,1,8,10,17,14,19,18,16,15,13,7,0,12,6,9,11,5,3]
     # unsorted = [14,0,7,12,16,17,11,15,3,18,4,10,1,9,5,13,19,8,2,6]
-    unsorted = [9,5,6,4,19,15,16,10,12,7,2,8,1,11,0,14,18,13,17,3]
+    # unsorted = [9,5,6,4,19,15,16,10,12,7,2,8,1,11,0,14,18,13,17,3]
     sorted = [0] * len(unsorted)
     sort(unsorted, sorted)
     print(sorted)
