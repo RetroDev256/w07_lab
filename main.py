@@ -41,6 +41,8 @@ def mergeRanges(
 
 def inOrderAt(arr: list[int], start: int) -> int:
     ''' Returns the length of the in-order sublist at the start index '''
+    assert 0 <= start <= len(arr)
+
     for index in range(start + 1, len(arr)):
         if arr[index] < arr[index - 1]:
             return index - start
@@ -64,16 +66,72 @@ def sort(source: list[int], dest: list[int]) -> None:
             start = end
         
         # Swap references to source and dest for next iteration
-        source = dest
+        source, dest = dest, source
 
-def main():
-    unsorted = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
-    # unsorted = [2,4,1,8,10,17,14,19,18,16,15,13,7,0,12,6,9,11,5,3]
-    # unsorted = [14,0,7,12,16,17,11,15,3,18,4,10,1,9,5,13,19,8,2,6]
-    # unsorted = [9,5,6,4,19,15,16,10,12,7,2,8,1,11,0,14,18,13,17,3]
-    sorted = [0] * len(unsorted)
-    sort(unsorted, sorted)
-    print(sorted)
+def test_mergeRanges() -> None:
+    tests = [
+        ([1,2,3,4,5], [0,0,0,0,0], 0, 0,   3,         [1,2,3,0,0]),
+        ([5,4,3,2,1], [0,0,0,0,0], 0, 1,   2,         [4,5,0,0,0]),
+        ([3,4,5,1,2], [0,0,0,0,0], 0, 3,   5,         [1,2,3,4,5]),
+        ([1,2,3,4,5],          [], 0, 0,   0,   "assertion error"),
+        ([1,2,3,4,5], [0,0,0,0,0], 0, 0, 100,   "assertion error"),
+        (         [], [0,0,0,0,0], 0, 0,   0,   "assertion error"),
+        ([1,2,3,4,5], [0,0,0,0,0], 0, 0,   0,         [0,0,0,0,0]),
+        (         [],          [], 0, 0,   0,                  []),
+        (        [1],         [0], 0, 0,   1,                 [1]),
+    ]
+    
+    for test in tests:
+        source, dest, start, split, end, expected = test
+        try:
+            mergeRanges(source, dest, start, split, end)
+            assert dest == expected
+        except AssertionError:
+            assert expected == "assertion error"
+
+def test_inOrderAt() -> None:
+    tests = [
+        ([1,2,3,4,5],   0,                 5),
+        ([1,2,3,4,5],   3,                 2),
+        ([1,2,5,0,0],   0,                 3),
+        ([1,2,3,4,5], -10, "assertion error"),
+        ([1,2,3,4,5],  10, "assertion error"),
+        ([1,2,3,4,5],   5,                 0),
+        (         [],   0,                 0),
+    ]
+    
+    for test in tests:
+        arr, start, expected = test
+        try:
+            result = inOrderAt(arr, start)
+            assert result == expected
+        except AssertionError:
+            assert expected == "assertion error"
+
+def test_sort() -> None:
+    tests = [
+        ([1,2,3,4,5], [0,0,0,0,0],       [1,2,3,4,5]),
+        ([5,4,3,2,1], [0,0,0,0,0],       [1,2,3,4,5]),
+        ([5,1,4,3,2], [0,0,0,0,0],       [1,2,3,4,5]),
+        ([1,2,3,4,5],          [], "assertion error"),
+        (         [], [0,0,0,0,0], "assertion error"),
+        (         [],          [],                []),
+        (        [0],         [0],               [0]),
+        ([5,5,5,5,5], [0,0,0,0,0],       [5,5,5,5,5]),
+    ]
+    
+    for test in tests:
+        source, dest, expected = test
+        try:
+            sort(source, dest)
+            assert dest == expected
+        except AssertionError:
+            assert expected == "assertion error"
+
+def runTests() -> None:
+    test_inOrderAt()
+    test_mergeRanges()
+    test_sort()
 
 if __name__ == "__main__":
-    main()
+    runTests()
