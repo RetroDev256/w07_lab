@@ -1,3 +1,23 @@
+# 1. Name:
+#      Eric Petersen
+#
+# 2. Assignment Name:
+#      Lab 09 : Sub-List Sort Program
+#
+# 3. Assignment Description:
+#      The program is meant to sort a list of integers, with the assignment
+#      purpose being implementation of the functions and an automation driver
+#      to test the code, with the test cases from last week.
+#
+# 4. What was the hardest part? Be as specific as possible.
+#      The hardest part of this week was thinking of good test cases for the
+#      sort function. Everything else that may have been difficult was
+#      completed previously.
+#  
+# 5. How long did it take for you to complete the assignment?
+#     This assignment took about 45 minutes to complete, including recording
+#     the video.
+
 def mergeRanges(
     source: list[int], dest: list[int], start: int, split: int, end: int
 ) -> None:
@@ -124,14 +144,23 @@ def test_inOrderAt() -> None:
 
 def test_sort() -> None:
     tests = [
-        ([1,2,3,4,5], [0,0,0,0,0],       [1,2,3,4,5]),
-        ([5,4,3,2,1], [0,0,0,0,0],       [1,2,3,4,5]),
-        ([5,1,4,3,2], [0,0,0,0,0],       [1,2,3,4,5]),
-        ([1,2,3,4,5],          [], "assertion error"),
-        (         [], [0,0,0,0,0], "assertion error"),
-        (         [],          [],                []),
-        (        [0],         [0],               [0]),
-        ([5,5,5,5,5], [0,0,0,0,0],       [5,5,5,5,5]),
+        # Valid cases correctly sort elements from smallest to largest
+        (                  [0],                   [0],                   [0]),
+        (              [0,1,2],               [0,0,0],               [0,1,2]),
+        (          [5,1,4,3,2],           [0,0,0,0,0],           [1,2,3,4,5]),
+        (        [0,5,3,4,1,2],         [0,0,0,0,0,0],         [0,1,2,3,4,5]),
+        (    [3,4,0,7,2,1,6,5],     [0,0,0,0,0,0,0,0],     [0,1,2,3,4,5,6,7]),
+        ([6,2,8,4,3,0,7,9,1,5], [0,0,0,0,0,0,0,0,0,0], [0,1,2,3,4,5,6,7,8,9]),
+
+        # Invalid inputs have mismatching lengths on input and output
+        (          [1,2,3,4,5],                    [],     "assertion error"),
+        (                   [],           [0,0,0,0,0],     "assertion error"),
+
+        # Boundary cases - zero elements, reversed, in-order and all-identical
+        (                   [],                    [],                    []),
+        (          [1,2,3,4,5],           [0,0,0,0,0],           [1,2,3,4,5]),
+        (          [5,4,3,2,1],           [0,0,0,0,0],           [1,2,3,4,5]),
+        (          [5,5,5,5,5],           [0,0,0,0,0],           [5,5,5,5,5]),
     ]
     
     for (index, test) in enumerate(tests):
@@ -142,12 +171,12 @@ def test_sort() -> None:
             if result == expected:
                 print("PASS")
             else:
-                print("FAIL !!!")
+                print("UNEXPECTED RESULT !!!")
         except AssertionError:
             if expected == "assertion error":
                 print("PASS")
             else:
-                print("FAIL !!!")
+                print("UNEXPECTED ASSERT !!!")
 
 def runTests() -> None:
     test_inOrderAt()
