@@ -81,13 +81,20 @@ def test_mergeRanges() -> None:
         (        [1],         [0], 0, 0,   1,                 [1]),
     ]
     
-    for test in tests:
-        source, dest, start, split, end, expected = test
+    for (index, test) in enumerate(tests):
+        print(f"TEST mergeRanges() #{index}... ", end="")
+        source, result, start, split, end, expected = test
         try:
-            mergeRanges(source, dest, start, split, end)
-            assert dest == expected
+            mergeRanges(source, result, start, split, end)
+            if result == expected:
+                print("PASS")
+            else:
+                print("FAIL !!!")
         except AssertionError:
-            assert expected == "assertion error"
+            if expected == "assertion error":
+                print("PASS")
+            else:
+                print("FAIL !!!")
 
 def test_inOrderAt() -> None:
     tests = [
@@ -100,13 +107,20 @@ def test_inOrderAt() -> None:
         (         [],   0,                 0),
     ]
     
-    for test in tests:
+    for (index, test) in enumerate(tests):
+        print(f"TEST inOrderAt() #{index}... ", end="")
         arr, start, expected = test
         try:
             result = inOrderAt(arr, start)
-            assert result == expected
+            if result == expected:
+                print("PASS")
+            else:
+                print("FAIL !!!")
         except AssertionError:
-            assert expected == "assertion error"
+            if expected == "assertion error":
+                print("PASS")
+            else:
+                print("FAIL !!!")
 
 def test_sort() -> None:
     tests = [
@@ -120,13 +134,20 @@ def test_sort() -> None:
         ([5,5,5,5,5], [0,0,0,0,0],       [5,5,5,5,5]),
     ]
     
-    for test in tests:
-        source, dest, expected = test
+    for (index, test) in enumerate(tests):
+        print(f"TEST sort() #{index}... ", end="")
+        source, result, expected = test
         try:
-            sort(source, dest)
-            assert dest == expected
+            sort(source, result)
+            if result == expected:
+                print("PASS")
+            else:
+                print("FAIL !!!")
         except AssertionError:
-            assert expected == "assertion error"
+            if expected == "assertion error":
+                print("PASS")
+            else:
+                print("FAIL !!!")
 
 def runTests() -> None:
     test_inOrderAt()
